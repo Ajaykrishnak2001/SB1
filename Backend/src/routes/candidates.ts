@@ -7,11 +7,16 @@ const router = express.Router();
 router.get("/", async (req: Request, res: Response) => {
   try {
     const candidates = await Candidate.find();
+    console.log("Fetched candidates:", candidates);
+
     res.json(candidates);
   } catch (error) {
     console.error("Error fetching candidates:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+
 
 export default router;

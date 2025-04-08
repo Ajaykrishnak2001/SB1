@@ -15,7 +15,12 @@ const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/SB1";
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+
+app.use(cors({
+  origin: "https://sb-1-eight.vercel.app", // 👈 your actual Vercel URL here
+  credentials: true,
+}));
+
 
 
 app.use("/api/candidates", candidatesRoutes); 
@@ -29,6 +34,9 @@ mongoose
 
 // Routes
 app.use("/api/auth", authRoutes);
+
+
+
 
 // Health Check Route
 app.get("/", (req, res) => {
