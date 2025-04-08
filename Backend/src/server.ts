@@ -16,10 +16,25 @@ const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/SB1";
 // Middleware
 app.use(express.json());
 
-app.use(cors({
-  origin: "https://sb-1-eight.vercel.app", // 👈 your actual Vercel URL here
-  credentials: true,
-}));
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://sb-1-eight.vercel.app'
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true
+  })
+);
+
+
 
 
 
